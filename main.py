@@ -17,15 +17,9 @@ segment_colors = ["#A9A9A9", "#808080", "#696969", "#778899", "#B0C4DE"]
 # Set up the screen
 wn = turtle.Screen()
 wn.title("Welcome to Snake Game")
-wn.bgcolor("black")
+wn.bgcolor("black")  # Start with black background
 wn.setup(width=620, height=620)
 wn.tracer(0)
-
-# Set background image (must be GIF and in project folder)
-try:
-    wn.bgpic("tenor.gif")  # Place your GIF in the project folder
-except:
-    wn.bgcolor("black")       # Fallback if GIF not found
 
 # Draw border
 border = turtle.Turtle()
@@ -126,7 +120,6 @@ def pause_game():
         game_over.clear()
 
 def move():
-    # Move the segments in a smooth, following manner
     if len(segments) > 0:
         for index in range(len(segments)-1, 0, -1):
             x = segments[index-1].xcor()
@@ -134,7 +127,6 @@ def move():
             segments[index].goto(x, y)
         segments[0].goto(head.xcor(), head.ycor())
 
-    # Move the head in the current direction
     if head.direction == "up":
         y = head.ycor()
         head.sety(y + 20)
@@ -148,11 +140,9 @@ def move():
         x = head.xcor()
         head.setx(x + 20)
 
-    # Draw eyes and tongue
     draw_head_details()
 
 def draw_head_details():
-    # Eyes position based on direction
     head_x, head_y = head.xcor(), head.ycor()
     eye_offset = 7
     if head.direction == "up":
@@ -197,7 +187,7 @@ def add_segment():
     color_index = len(segments) % len(segment_colors)
     new_segment = turtle.Turtle()
     new_segment.speed(0)
-    new_segment.shape("circle")  # Rounded segment
+    new_segment.shape("circle")
     new_segment.color(segment_colors[color_index])
     new_segment.penup()
     segments.append(new_segment)
@@ -218,10 +208,10 @@ while True:
         continue
 
     # Check for a collision with the border
-    if head.xcor()>290 or head.xcor()<-290 or head.ycor()>290 or head.ycor()<-290:
+    if head.xcor() > 290 or head.xcor() < -290 or head.ycor() > 290 or head.ycor() < -290:
         play_sound("SystemHand")
         time.sleep(1)
-        head.goto(0,0)
+        head.goto(0, 0)
         head.direction = "stop"
 
         # Hide the segments
@@ -235,27 +225,28 @@ while True:
 
         pen.clear()
         pen.write("Score: {}  High Score: {}".format(score, high_score), align="center", font=("Courier", 24, "bold"))
+
+        # Show Game Over message and GIF
         game_over.clear()
+        wn.bgpic("tenor.gif")
         game_over.write("Game Over!", align="center", font=("Courier", 36, "bold"))
-        time.sleep(1)
+        time.sleep(2)
+        wn.bgpic("")  # Clear GIF
+        wn.bgcolor("black")
         game_over.clear()
 
     # Check for a collision with the food
     if head.distance(food) < 20:
         play_sound("SystemAsterisk")
-        # Move the food to a random spot
         x = random.randint(-280, 280)
         y = random.randint(-280, 280)
-        food.goto(x,y)
+        food.goto(x, y)
         food.color(random.choice(food_colors))
 
-        # Add a segment with gradient color
         add_segment()
 
-        # Shorten the delay
         delay = max(0.05, delay - 0.001)
 
-        # Increase the score
         score += 10
         if score > high_score:
             high_score = score
@@ -270,23 +261,26 @@ while True:
         if segment.distance(head) < 20:
             play_sound("SystemHand")
             time.sleep(1)
-            head.goto(0,0)
+            head.goto(0, 0)
             head.direction = "stop"
 
-            # Hide the segments
             for segment in segments:
                 segment.goto(1000, 1000)
             segments.clear()
 
-            # Reset the score
             score = 0
             delay = 0.1
 
             pen.clear()
             pen.write("Score: {}  High Score: {}".format(score, high_score), align="center", font=("Courier", 24, "bold"))
+
+            # Show Game Over message and GIF
             game_over.clear()
+            wn.bgpic("tenor.gif")
             game_over.write("Game Over!", align="center", font=("Courier", 36, "bold"))
-            time.sleep(1)
+            time.sleep(2)
+            wn.bgpic("")  # Clear GIF
+            wn.bgcolor("black")
             game_over.clear()
 
     time.sleep(delay)

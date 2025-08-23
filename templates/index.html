@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Snake Game Launcher</title>
+<link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+<main class="container">
+<header>
+<h1>🐍 Snake Game</h1>
+<p class="subtitle">Click Play to open the Turtle window and start the game.</p>
+</header>
+
+
+<div class="card">
+<button id="playBtn" class="btn">Play</button>
+<button id="stopBtn" class="btn btn-secondary" title="Best-effort stop">Stop</button>
+<p id="status" class="status">Ready.</p>
+
+
+<details class="hint">
+<summary>Controls</summary>
+<ul>
+<li><b>W / A / S / D</b> to move</li>
+<li><b>P</b> to pause</li>
+</ul>
+</details>
+</div>
+
+
+<footer>
+<small>Runs your local <code>main.py</code> in a separate window. Keep this tab open while playing.</small>
+</footer>
+</main>
+<script src="/static/script.js"></script>
+</body>
+</html>
